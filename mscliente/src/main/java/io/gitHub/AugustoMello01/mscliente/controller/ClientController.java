@@ -16,7 +16,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.gitHub.AugustoMello01.mscliente.domain.Client;
 import io.gitHub.AugustoMello01.mscliente.dto.ClientDTO;
 import io.gitHub.AugustoMello01.mscliente.services.ClienteService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/clientes")
 public class ClientController {
@@ -24,8 +26,10 @@ public class ClientController {
 	@Autowired
 	private ClienteService service;
 	
+	
 	@GetMapping
-	public String status () { 
+	public String status () {
+		log.info("Obtendo o status do microsservice de cliente");
 		return "ok";
 	}
 	
