@@ -1,7 +1,6 @@
 package io.gitHub.AugustoMello01.mscliente.controller;
 
 import java.net.URI;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,11 +42,8 @@ public class ClientController {
 	}
 	
 	@GetMapping(params = "cpf")
-	public ResponseEntity<Optional<Client>> findByCpf(@RequestParam("cpf") String cpf){
-		Optional<Client> client = service.findByCpf(cpf);
-		if (client.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok().body(client);
+	public ResponseEntity<Client> findByCpf(@RequestParam("cpf") String cpf){
+		Client entity = service.findByCpf(cpf);
+		return ResponseEntity.ok().body(entity);
 	}
 }

@@ -1,7 +1,5 @@
 package io.gitHub.AugustoMello01.mscliente.services;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +26,9 @@ public class ClienteService {
 		return new ClientDTO(entity);
 	}
 	
-	public Optional<Client> findByCpf(String cpf){
-		return repository.findByCpf(cpf);
+	public Client findByCpf(String cpf){
+		Client cliente = repository.findByCpf(cpf);
+		return cliente;
 	}
 	
 }
