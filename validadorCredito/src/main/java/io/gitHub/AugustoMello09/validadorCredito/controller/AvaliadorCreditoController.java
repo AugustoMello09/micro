@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.gitHub.AugustoMello09.validadorCredito.domain.DadosAvaliacao;
+import io.gitHub.AugustoMello09.validadorCredito.domain.DadosSolicitadosEmissaoCartao;
+import io.gitHub.AugustoMello09.validadorCredito.domain.ProtocoloSituacaoCartao;
 import io.gitHub.AugustoMello09.validadorCredito.domain.RetornoAvaliacaoCliente;
 import io.gitHub.AugustoMello09.validadorCredito.domain.SituacaoCliente;
 import io.gitHub.AugustoMello09.validadorCredito.execptions.DadosClienteNotFoundException;
 import io.gitHub.AugustoMello09.validadorCredito.execptions.ErroComunicacaoMicrosserviceException;
+import io.gitHub.AugustoMello09.validadorCredito.execptions.ErroSolicitacao;
 import io.gitHub.AugustoMello09.validadorCredito.service.AvaliadorCredidoService;
 
 @RestController
@@ -52,6 +55,16 @@ public class AvaliadorCreditoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (ErroComunicacaoMicrosserviceException e) {
 			return ResponseEntity.status(HttpStatus.resolve(e.getStatus())).build();
+		}
+	}
+	
+	@PostMapping(value = "solicitacao-cartoes")
+	public ResponseEntity<ProtocoloSituacaoCartao> solicitarCartao(@RequestBody DadosSolicitadosEmissaoCartao dados){
+		try {
+			ProtocoloSituacaoCartao protocoloSituacaoCartao = avaliadorCredidoService.solicitarEmissaoDeCartao(dados);
+			return ResponseEntity.ok().body(protocoloSituacaoCartao);
+		} catch (ErroSolicitacao e) {
+			return ResponseEntity.internalServerError().build();
 		}
 	}
 	
